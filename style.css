@@ -1,9 +1,9 @@
-/* Reset and base font */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f9f9fb;
@@ -11,23 +11,25 @@ body {
   line-height: 1.6;
 }
 
-/* Header & Nav */
 header {
   background: #1e1e2f;
   color: white;
   padding: 1.5rem 2rem;
   text-align: center;
 }
+
 header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
+
 nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
 }
+
 nav a {
   color: white;
   text-decoration: none;
@@ -36,16 +38,17 @@ nav a {
   border-radius: 4px;
   transition: background 0.3s;
 }
+
 nav a:hover {
   background: #3a3a5e;
 }
 
-/* Layout */
 .container {
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
+
 .content article {
   background: white;
   border-radius: 10px;
@@ -54,19 +57,24 @@ nav a:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s;
 }
+
 .content article:hover {
   transform: translateY(-5px);
 }
+
 .content h2 {
   margin-bottom: 0.5rem;
 }
+
 .content h2 a {
   color: #1e1e2f;
   text-decoration: none;
 }
+
 .content h2 a:hover {
   text-decoration: underline;
 }
+
 .meta {
   font-size: 0.9rem;
   color: #777;
@@ -92,7 +100,6 @@ nav a:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* Sidebar styling */
 .sidebar {
   padding: 20px;
   background-color: #f9f9f9;
@@ -100,7 +107,6 @@ nav a:hover {
   margin-top: 40px;
 }
 
-/* Comment form card */
 .card {
   background-color: #fff;
   padding: 20px;
@@ -116,7 +122,6 @@ nav a:hover {
   display: block;
 }
 
-/* Form groups */
 .form .group {
   position: relative;
   margin-bottom: 20px;
@@ -150,7 +155,6 @@ nav a:hover {
   color: #555;
 }
 
-/* Submit button */
 .form button[type="submit"] {
   padding: 10px 20px;
   background-color: #0077ff;
@@ -166,6 +170,94 @@ nav a:hover {
   background-color: #005fcc;
 }
 
+.tense-section {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.tense-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tense-card {
+  background: #f9f9ff;
+  border-left: 5px solid #6a5acd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  flex: 1 1 280px;
+  transition: transform 0.2s ease;
+}
+
+.tense-card:hover {
+  transform: translateY(-3px);
+}
+
+.tense-title {
+  font-weight: bold;
+  color: #4b0082;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tense-formula {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.4rem;
+}
+
+.tense-example {
+  font-style: italic;
+  color: #444;
+}
+
+.grammar-section {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.grammar-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.grammar-card {
+  background: #f0fff0;
+  border-left: 5px solid #2e8b57;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  flex: 1 1 280px;
+  transition: transform 0.2s ease;
+}
+
+.grammar-card:hover {
+  transform: translateY(-3px);
+}
+
+.grammar-title {
+  font-weight: bold;
+  color: #006400;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.grammar-rule {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.4rem;
+}
+
+.grammar-example {
+  font-style: italic;
+  color: #444;
+}
 
 footer {
   background: #1e1e2f;
@@ -175,7 +267,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* Mobile */
 @media (max-width: 600px) {
   nav {
     flex-direction: column;

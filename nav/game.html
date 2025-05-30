@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple Wordle Game</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 2rem;
+        }
+        .content {
+            flex: 3;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #wordle-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(4, 50px);
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .tile {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            user-select: none;
+        }
+        .tile.correct {
+            background-color: #6aaa64; /* green */
+            border-color: #6aaa64;
+            color: white;
+        }
+        .tile.present {
+            background-color: #c9b458; /* yellow */
+            border-color: #c9b458;
+            color: white;
+        }
+        .tile.absent {
+            background-color: #787c7e; /* gray */
+            border-color: #787c7e;
+            color: white;
+        }
+        #guess-input {
+            width: 200px;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+        #submit-btn {
+            padding: 0.6rem 1rem;
+            font-size: 1.1rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            background-color: #4b0082;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #submit-btn:disabled {
+            background-color: #a59ecb;
+            cursor: not-allowed;
+        }
+        #message {
+            height: 1.5rem;
+            margin-top: 0.5rem;
+            color: #4b0082;
+            font-weight: bold;
+        }
+        #hint {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        aside.sidebar {
+            flex: 1;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        aside.sidebar h3 {
+            margin-top: 0;
+        }
+        aside.sidebar a {
+            color: #4b0082;
+            text-decoration: none;
+        }
+        aside.sidebar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Game</h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="PInfo.html">Personal Info</a>
+            <a href="tenses.html">Tenses</a>
+            <a href="Grammar.html">Grammar</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="content">   
+            <h2>Wordle</h2>
+            <div id="hint"></div>
+
+            <div id="wordle-grid" aria-label="Wordle guessing grid" role="grid"></div>
+
+            <div>
+                <input id="guess-input" maxlength="5" autocomplete="off" placeholder="Enter 5 letter" />
+                <button id="submit-btn">Submit</button>
+            </div>
+            <div id="message"></div>
+        </div>
+
+        <aside class="sidebar">
+            <h3>Back to Blog</h3>
+            <p><a href="../index.html">← Return to all posts</a></p>
+            <div class="card">
+                <span class="title">Leave a Comment</span>
+                <form class="form">
+                    <div class="group">
+                        <input placeholder="‎" type="text" required="">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="group">
+                        <input placeholder="‎" type="email" id="email" name="email" required="">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="group">
+                        <textarea placeholder="‎" id="comment" name="comment" rows="5" required=""></textarea>
+                        <label for="comment">Comment</label>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Learn English with Fun</p>
+    </footer>
+
+    <script>
+        (() => {
+            const WORDS = [
+                { word: "APPLE", hint: "A common fruit that's often red or green." },
+                { word: "BRAVE", hint: "Showing courage and facing fear." },
+                { word: "CRANE", hint: "A tall bird or a machine used in construction." },
+                { word: "DREAM", hint: "What you see when you sleep or a big hope." },
+                { word: "EAGER", hint: "Very excited and wanting to do something." },
+                { word: "FLAME", hint: "The bright part of a fire." },
+                { word: "GRACE", hint: "Elegance or divine favor." },
+                { word: "HONEY", hint: "Sweet substance made by bees." },
+                { word: "IDEAL", hint: "Perfect or most suitable." },
+                { word: "JUMBO", hint: "Very large or huge." }
+            ];
+
+            const WORD_LENGTH = 5;
+            const MAX_GUESSES = 4;
+
+            const randomIndex = Math.floor(Math.random() * WORDS.length);
+            const answer = WORDS[randomIndex].word;
+            const hintText = WORDS[randomIndex].hint;
+
+            let currentRow = 0;
+
+            const grid = document.getElementById("wordle-grid");
+            const input = document.getElementById("guess-input");
+            const submitBtn = document.getElementById("submit-btn");
+            const message = document.getElementById("message");
+            const hint = document.getElementById("hint");
+
+            hint.textContent = "Hint: " + hintText;
+
+            for(let i=0; i < WORD_LENGTH * MAX_GUESSES; i++){
+                const tile = document.createElement("div");
+                tile.classList.add("tile");
+                grid.appendChild(tile);
+            }
+
+            function updateGrid(guess, row){
+                for(let i=0; i<WORD_LENGTH; i++){
+                    const tileIndex = row * WORD_LENGTH + i;
+                    const tile = grid.children[tileIndex];
+                    tile.textContent = guess[i];
+
+                    tile.classList.remove("correct", "present", "absent");
+
+                    if(guess[i] === answer[i]){
+                        tile.classList.add("correct");
+                    } else if(answer.includes(guess[i])){
+                        tile.classList.add("present");
+                    } else {
+                        tile.classList.add("absent");
+                    }
+                }
+            }
+
+            function disableGame(msg){
+                message.textContent = msg;
+                input.disabled = true;
+                submitBtn.disabled = true;
+            }
+
+            submitBtn.addEventListener("click", () => {
+                let guess = input.value.toUpperCase();
+                if(guess.length !== WORD_LENGTH){
+                    message.textContent = "Please enter a 5-letter word.";
+                    return;
+                }
+
+                updateGrid(guess, currentRow);
+                if(guess === answer){
+                    disableGame("🎉 Congratulations! You guessed the word!");
+                    return;
+                }
+
+                currentRow++;
+                if(currentRow >= MAX_GUESSES){
+                    disableGame(`Game Over! The word was ${answer}.`);
+                    return;
+                }
+                input.value = "";
+                input.focus();
+                message.textContent = `Try again! (${MAX_GUESSES - currentRow} guesses left)`;
+            });
+
+            input.addEventListener("keydown", e => {
+                if(e.key === "Enter"){
+                    submitBtn.click();
+                }
+            });
+
+            input.focus();
+        })();
+    </script>
+</body>
+</html>
