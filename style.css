@@ -1,0 +1,183 @@
+/* Reset and base font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9fb;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header & Nav */
+header {
+  background: #1e1e2f;
+  color: white;
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+nav a:hover {
+  background: #3a3a5e;
+}
+
+/* Layout */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.content article {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+.content article:hover {
+  transform: translateY(-5px);
+}
+.content h2 {
+  margin-bottom: 0.5rem;
+}
+.content h2 a {
+  color: #1e1e2f;
+  text-decoration: none;
+}
+.content h2 a:hover {
+  text-decoration: underline;
+}
+.meta {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.image-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-container img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Sidebar styling */
+.sidebar {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-left: 2px solid #ddd;
+  margin-top: 40px;
+}
+
+/* Comment form card */
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card .title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+  display: block;
+}
+
+/* Form groups */
+.form .group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-color: #0077ff;
+  outline: none;
+  background-color: #fff;
+}
+
+.form label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: #fff;
+  padding: 0 4px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Submit button */
+.form button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #0077ff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form button[type="submit"]:hover {
+  background-color: #005fcc;
+}
+
+
+footer {
+  background: #1e1e2f;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+}
